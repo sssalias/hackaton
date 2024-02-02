@@ -17,6 +17,6 @@ class Screen:
         self.running = True
         pygame.display.set_caption('game')
         info = pygame.display.Info()
-        size = self.width, self.height = 800, 600
+        size = self.width, self.height = 1000, 800
         self.screen = pygame.display.set_mode(size)
         self.screen.fill(self.COLORS[color])

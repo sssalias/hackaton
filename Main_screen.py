@@ -2,6 +2,7 @@ import pygame
 from Screens.Screen import Screen
 from Screens.Menu import Menu
 from Screens.Settings import Settings
+from Screens.Level import Level
 
 
 class Game(Screen):
@@ -11,7 +12,8 @@ class Game(Screen):
         super().__init__(self.color)
         self.menu = Menu(self.screen, self.width, self.height)
         self.settings = Settings(self.screen, self.width, self.height)
-        self.screens = [self.menu, self.settings]
+        self.level = Level(self.screen, self.width, self.height)
+        self.screens = [self.menu, self.settings, self.level]
         for scr in self.screens:
             scr.add(self.screens)
 
