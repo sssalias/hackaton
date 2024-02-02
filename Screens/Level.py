@@ -23,13 +23,13 @@ class Level:
 
     def events(self, event):
         if event.type == pygame.KEYDOWN:
-            if event.type == 768 and not self.draw:
+            if event.key == pygame.K_ESCAPE and not self.draw:
                 self.draw = True
-            elif event.type == 768 and self.draw:
+            elif event.key == pygame.K_ESCAPE and self.draw:
                 for scr in self.screens:
                     scr.state = False
                 self.screens[0].state = True
                 self.draw = False
-            elif event.type != pygame.K_ESCAPE:
+            elif event.key == pygame.K_RETURN:
                 self.draw = False
 
