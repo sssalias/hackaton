@@ -43,6 +43,8 @@ class Settings:
 
             elif collision_cursor_polz(self.polz.x, self.polz.y, self.polz.size, event.pos[0], event.pos[1]):
                 self.moving_1 = True
+        elif event.type == pygame.MOUSEBUTTONUP:
+            self.moving_1 = False
         if event.type == pygame.MOUSEMOTION:
             if self.moving_1:
                 self.polz.move(event.rel, event.pos)
