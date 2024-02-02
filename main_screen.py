@@ -27,6 +27,5 @@ class Game(Screen):
                 if scr.state:
                     scr.loop()
                     scr.buttonUpdate(event, screen, self.color)
-
             pygame.display.flip()
         pygame.quit()
