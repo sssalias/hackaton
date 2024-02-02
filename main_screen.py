@@ -23,9 +23,8 @@ class Game(Screen):
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
-            for scr in self.screens:
-                if scr.state:
-                    scr.loop()
-                    scr.buttonUpdate(event, screen, self.color)
+                for scr in self.screens:
+                    if scr.state:
+                        scr.loop(event)
             pygame.display.flip()
         pygame.quit()
