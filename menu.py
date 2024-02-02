@@ -1,5 +1,6 @@
 import pygame
 from Texts import Text
+from Functions import collision_cursor
 
 
 class Menu:
@@ -25,9 +26,7 @@ class Menu:
 
     def buttonUpdate(self, event, screen, color):
        if event.type == pygame.MOUSEBUTTONDOWN:
-            if self.btn.x - 10 < event.pos[
-                    0] < self.btn.x + self.btn.text.get_width() + 10 and self.btn.y - 10 < event.pos[
-                    1] < self.btn.y + self.btn.text.get_height() + 10:
+            if collision_cursor(self.btn, event):
                 for scr in self.screens:
                     scr.state = False
                 screen.fill(pygame.Color(color))

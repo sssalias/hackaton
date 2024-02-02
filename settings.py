@@ -1,5 +1,6 @@
 import pygame
 from Texts import Text
+from Functions import collision_cursor
 
 
 class Settings:
@@ -28,9 +29,7 @@ class Settings:
 
     def buttonUpdate(self, event, screen, color):
         if event.type == pygame.MOUSEBUTTONDOWN:
-            if self.exit.x - 10 < event.pos[
-                    0] < self.exit.x + self.exit.text.get_width() + 10 and self.exit.y - 10 < event.pos[
-                    1] < self.exit.y + self.exit.text.get_height() + 10:
+            if collision_cursor(self.exit, event):
                 for scr in self.screens:
                     scr.state = False
                 screen.fill(pygame.Color(color))
