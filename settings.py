@@ -29,7 +29,7 @@ class Settings:
 
     def buttonUpdate(self, event, screen, color):
         if event.type == pygame.MOUSEBUTTONDOWN:
-            if collision_cursor(self.exit, event):
+            if collision_cursor(self.exit.x, self.exit.y, self.exit.width, self.exit.height, event.pos[0], event.pos[1]):
                 for scr in self.screens:
                     scr.state = False
                 screen.fill(pygame.Color(color))

@@ -26,7 +26,7 @@ class Menu:
 
     def buttonUpdate(self, event, screen, color):
        if event.type == pygame.MOUSEBUTTONDOWN:
-            if collision_cursor(self.btn, event):
+            if collision_cursor(self.btn.x, self.btn.y, self.btn.width, self.btn.height, event.pos[0], event.pos[1]):
                 for scr in self.screens:
                     scr.state = False
                 screen.fill(pygame.Color(color))
