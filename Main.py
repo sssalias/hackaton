@@ -1,4 +1,4 @@
-from main_screen import Game
+from Main_screen import Game
 
 
 if __name__ == "__main__":

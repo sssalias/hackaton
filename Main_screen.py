@@ -1,7 +1,7 @@
 import pygame
-from Screen import Screen
-from menu import Menu
-from settings import Settings
+from Screens.Screen import Screen
+from Screens.Menu import Menu
+from Screens.Settings import Settings
 
 
 class Game(Screen):
