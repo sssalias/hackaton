@@ -1,7 +1,7 @@
 import pygame
 
 from Functions import collision_cursor, collision_cursor_polz
-from Texts import Text
+from Utilities.Texts import Text
 
 
 class Settings:

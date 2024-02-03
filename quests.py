@@ -1,5 +1,5 @@
 import pygame
-from Texts import Text
+from Utilities.Texts import Text
 
 WHITE = (255, 255, 255)
 w = 150

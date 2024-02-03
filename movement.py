@@ -24,7 +24,7 @@ def load_image(name, colorkey=None):
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos_x, pos_y):
-        super().__init__(players, all_sprites)
+        super().__init__(players)
         self.image = load_image('0c4a35590e197fd.png')
         self.rect = self.image.get_rect().move(pos_x, pos_y)
         self.x = pos_x
@@ -38,6 +38,22 @@ class Circle:
 
     def draw(self):
         pygame.draw.circle(self.screen, pygame.Color('white'), (self.x, self.y), 10)
+
+
+class Grass(pygame.sprite.Sprite):
+    def __init__(self, x, y, height, img, all_sprites=None):
+        super().__init__(all_sprites)
+        self.x = x
+        self.y = y
+        self.img_name = img
+        self.image = load_image(self.img_name)
+        self.height = height
+        self.width = self.image.get_rect().size[0] / (self.image.get_rect().size[1] / self.height)
+        self.image = pygame.transform.scale(self.image, (self.width, self.height))
+        self.rect = self.image.get_rect().move(x, y)
+
+    def move(self, x, y):
+        self.x, self.y = x, y
 
 
 if __name__ == '__main__':
@@ -56,6 +72,10 @@ if __name__ == '__main__':
     players = pygame.sprite.Group()
 
     all_sprites = pygame.sprite.Group()
+
+    for i in range(100):
+        for j in range(50):
+            Grass(j * 50, i * 100 - 2500, 100, '0c4a35590e197fd.png', all_sprites=all_sprites)
 
     player = Player(width // 2, height // 2)
 
@@ -106,8 +126,12 @@ if __name__ == '__main__':
             obj.y += y
             obj.draw()
 
+        for spr in all_sprites:
+            spr.move(x, y)
+
         x = 0
         y = 0
+        all_sprites.draw(screen)
 
         players.draw(screen)
 

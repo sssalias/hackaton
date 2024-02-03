@@ -1,5 +1,5 @@
 import pygame
-from Texts import Text
+from Utilities.Texts import Text
 from Functions import collision_cursor
 
 
