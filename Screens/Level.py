@@ -41,18 +41,19 @@ class Level:
         self.wolfs.update(self.player, self.wolfs)
         self.player.selectAnim(self.r, self.l, self.u, self.d)
         a = self.moove()
-        if a and self.player.x == self.widthScr / 2 and self.player.y == self.heightScr / 2:
+        print(0 < self.player.y < self.player.y + self.player.height - self.move_y < 800, a)
+        if a and (self.player.x == self.widthScr / 2 or self.player.y == self.heightScr / 2):
             for obj in self.objs:
                 obj.x += self.move_x
                 obj.y += self.move_y
                 obj.draw()
             self.fon.x += self.move_x
             self.fon.y += self.move_y
-        elif not a and 0 < self.player.y < self.player.y + self.player.height + self.move_y < 800:
+        elif 0 < self.player.y < self.player.y + self.player.height - self.move_y < 802:
+            print(0 < self.player.x < self.player.x + self.player.width - self.move_x < 1000, self.player.x)
             self.player.y -= self.move_y
-            if 0 < self.player.x < self.player.x + self.player.width + self.move_x < 1000:
+            if 0 < self.player.x - self.move_x < self.player.x + self.player.width - self.move_x < 1002:
                 self.player.x -= self.move_x
-        print(a, self.player.y, self.player.y + self.player.height + self.move_y, self.player.x, self.player.x + self.player.width + self.move_x)
         self.screen.blit(self.fon.image, (self.fon.x, self.fon.y))
         if self.night:
             self.wolf.rect.x += self.move_x
