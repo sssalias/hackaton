@@ -32,7 +32,7 @@ class Level:
         self.move_y = 0
         self.objs = []
         self.fon = Fon(-5000, -4200, 'fon.png')
-        self.night = False
+        self.night = True
         self.widthScr = 1000
         self.heightScr = 800
         self.trees = pygame.sprite.Group()

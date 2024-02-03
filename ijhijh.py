@@ -111,7 +111,6 @@ class Wolf(pygame.sprite.Sprite):
         self.rect.y += v_y
         self.rect.x += v_x
         # self.ind+=0.025
-        print(v_x, v_y)
         if v_x<0:
             self.image=load_image(f"wolf\\w{int(self.indx)%5+5}.png")
 
