@@ -1,6 +1,6 @@
 import pygame
 from Utilities.Texts import Text
-from Utilities.Functions import collision_cursor
+from Utilities.Functions import collision_cursor, load_image
 
 
 class Menu:
@@ -9,7 +9,8 @@ class Menu:
         self.screen = screen
         self.width = width
         self.height = height
-        self.text = Text(60, 'Animal Rescue', pygame.Color('Blue'), self.height // 2, self.width / 3 - 150, self.width,
+        self.img = load_image("menu.png")
+        self.text = Text(60, 'Animal Rescue', pygame.Color('Blue'), 350, 200, self.width,
                          self.height, self.screen)
         self.btn_1 = Text(60, 'SETTINGS', pygame.Color('Blue'), self.height // 2 + 150, self.width / 2.2, self.width,
                         self.height, self.screen, button=True)
@@ -39,4 +40,5 @@ class Menu:
                     scr.state = False
                 self.screens[2].state = True
         screen.fill(pygame.Color(color))
+        screen.blit(self.img, (0, 0))
 
