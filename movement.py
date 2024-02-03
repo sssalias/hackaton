@@ -29,6 +29,13 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect().move(pos_x, pos_y)
         self.x = pos_x
         self.y = pos_y
+        self.lifes = 3
+
+    def damage(self):
+        self.lifes -= 1
+        if self.lifes == 0:
+            death = True  # если жизни равны 0, то death становится True
+
 
 class Circle:
     def __init__(self, x, y, screen):
