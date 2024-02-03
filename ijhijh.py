@@ -74,6 +74,8 @@ class Fon:
 
 class Wolf(pygame.sprite.Sprite):
     def __init__(self, x, y):
+        self.indx=0
+        self.indy=0
         self.p_x = width // 2
         self.p_y = height // 2
         pygame.sprite.Sprite.__init__(self)
@@ -108,7 +110,20 @@ class Wolf(pygame.sprite.Sprite):
                 v_y = -4
         self.rect.y += v_y
         self.rect.x += v_x
-        self.image = load_image('Yellow dog\\2.png')
+        # self.ind+=0.025
+        if v_x<0:
+            self.image=load_image(f"wolf\\{(self.indx+5)%10}.png")
+            self.indx+=0.025
+        elif v_x>0:
+            self.image=load_image(f"wolf\\{(self.indx+5)%5}.png")
+            self.indx+=0.025
+            # pygame.image.flip(screen, True, False)
+        elif v_y>0:
+            self.image=load_image(f"wolf\\{self.indy%5+5}.png")
+            self.indy+=0.25
+        else:
+            self.image=load_image(f"wolf\\{self.indy%10}.png")
+            self.indy += 0.25
         for i in wolfs:
             if pygame.sprite.collide_mask(self, i) and self != i:
                 self.rect = self.rect.move(random.randint(-10, 10), random.randint(-10, 10))
