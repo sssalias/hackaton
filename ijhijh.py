@@ -1,5 +1,6 @@
 import pygame
 import pygame.sprite
+import random
 
 import os
 import sys
@@ -80,7 +81,7 @@ class Wolf(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
 
-    def update(self, other):
+    def update(self, other, wolfs):
 
         razn_x = (self.p_x - self.rect.x) ** 2
         razn_y = (self.p_y - self.rect.y) ** 2
@@ -88,26 +89,29 @@ class Wolf(pygame.sprite.Sprite):
         v_y = 0
         if (razn_y + razn_x) ** 0.5 > 1000:
             if self.p_x > self.rect.x:
-                v_x = 1
+                v_x = 2
             elif self.p_x < self.rect.x:
-                v_x = -1
+                v_x = -2
             if self.p_y > self.rect.y:
-                v_y = 1
+                v_y = 2
             elif self.p_y < self.rect.y:
-                v_y = -1
+                v_y = -2
         else:
             print(self.p_x > self.rect.x, self.p_x, self.rect.x)
             if self.p_x > self.rect.x:
-                v_x = 3
+                v_x = 4
             elif self.p_x < self.rect.x:
-                v_x = -3
+                v_x = -4
             if self.p_y > self.rect.y:
-                v_y = 3
+                v_y = 4
             elif self.p_y < self.rect.y:
-                v_y = -3
+                v_y = -4
         self.rect.y += v_y
         self.rect.x += v_x
-        self.image = load_image('Yellow dog\\1.png')
+        self.image = load_image('Yellow dog\\2.png')
+        for i in wolfs:
+            if pygame.sprite.collide_mask(self, i) and self != i:
+                self.rect = self.rect.move(random.randint(-10, 10), random.randint(-10, 10))
 
 
 if __name__ == '__main__':
@@ -143,11 +147,15 @@ if __name__ == '__main__':
     u, d, r, l = False, False, False, False
     x = 0
     y = 0
-
-    wolf = Wolf(-2000, -3000)
-
+    wolfs=pygame.sprite.Group()
+    wolf = Wolf(-100, -100)
+    wolf_2 = Wolf(500, -100)
+    wolf_3 = Wolf(-100, 500)
+    wolfs.add(wolf)
+    wolfs.add(wolf_2)
+    wolfs.add(wolf_3)
     while running:
-        wolf.update(player)
+        wolfs.update(player,wolfs)
         screen.fill(pygame.Color('black'))
         screen.blit(fon.image, (fon.x, fon.y))
         for event in pygame.event.get():
@@ -192,8 +200,14 @@ if __name__ == '__main__':
         fon.y += y
         wolf.rect.x += x
         wolf.rect.y += y
+        wolf_2.rect.x += x
+        wolf_2.rect.y += y
+        wolf_3.rect.x += x
+        wolf_3.rect.y += y
         print(wolf.rect.x, wolf.rect.y)
         screen.blit(wolf.image, (wolf.rect.x, wolf.rect.y))
+        screen.blit(wolf_2.image, (wolf_2.rect.x, wolf_2.rect.y))
+        screen.blit(wolf_3.image, (wolf_3.rect.x, wolf_3.rect.y))
 
         x = 0
         y = 0
