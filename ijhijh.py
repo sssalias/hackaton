@@ -30,6 +30,7 @@ class Player(pygame.sprite.Sprite):
         self.x = pos_x
         self.y = pos_y
 
+
 class Circle:
     def __init__(self, x, y, screen):
         self.x = x
@@ -72,40 +73,41 @@ class Fon:
 
 class Wolf(pygame.sprite.Sprite):
     def __init__(self, x, y):
-        self.p_x=x
-        self.p_y=y
+        self.p_x = width // 2
+        self.p_y = height // 2
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.Surface((50, 50))
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
 
-    def update(self,other):
+    def update(self, other):
 
         razn_x = (self.p_x - self.rect.x) ** 2
         razn_y = (self.p_y - self.rect.y) ** 2
         v_x = 0
         v_y = 0
-        if (razn_y+razn_x)**0.5>1000:
+        if (razn_y + razn_x) ** 0.5 > 1000:
             if self.p_x > self.rect.x:
-                v_x = 5
+                v_x = 1
             elif self.p_x < self.rect.x:
-                v_x = -5
+                v_x = -1
             if self.p_y > self.rect.y:
-                v_y = 5
+                v_y = 1
             elif self.p_y < self.rect.y:
-                v_y = -5
+                v_y = -1
         else:
+            print(self.p_x > self.rect.x, self.p_x, self.rect.x)
             if self.p_x > self.rect.x:
-                v_x = 15
+                v_x = 3
             elif self.p_x < self.rect.x:
-                v_x = -15
+                v_x = -3
             if self.p_y > self.rect.y:
-                v_y = 15
+                v_y = 3
             elif self.p_y < self.rect.y:
-                v_y = -15
+                v_y = -3
         self.rect.y += v_y
         self.rect.x += v_x
-        self.image=load_image('Yellow dog\\1.png')
+        self.image = load_image('Yellow dog\\1.png')
 
 
 if __name__ == '__main__':
@@ -148,7 +150,6 @@ if __name__ == '__main__':
         wolf.update(player)
         screen.fill(pygame.Color('black'))
         screen.blit(fon.image, (fon.x, fon.y))
-        print(fon.x, fon.image.get_rect().size[0], fon.y, fon.image.get_rect().size[1])
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -189,6 +190,8 @@ if __name__ == '__main__':
             spr.move(x, y)
         fon.x += x
         fon.y += y
+        wolf.rect.x += x
+        wolf.rect.y += y
         print(wolf.rect.x, wolf.rect.y)
         screen.blit(wolf.image, (wolf.rect.x, wolf.rect.y))
 
