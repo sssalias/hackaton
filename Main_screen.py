@@ -21,12 +21,18 @@ class Game(Screen):
         self.main_loop(self.screen)
 
     def main_loop(self, screen):
+        ev = ''
         while self.running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
-                for scr in self.screens:
-                    if scr.state:
-                        scr.loop(event)
+                ev = event
+            for scr in self.screens:
+                if scr.state:
+                    print('smth')
+                    if ev != '':
+                        scr.loop(event=ev)
+                    else:
+                        scr.loop()
             pygame.display.flip()
         pygame.quit()
