@@ -53,9 +53,9 @@ class Level:
             self.wolf_2.rect.y += self.move_y
             self.wolf_3.rect.x += self.move_x
             self.wolf_3.rect.y += self.move_y
-        self.screen.blit(self.wolf.image, (self.wolf.rect.x, self.wolf.rect.y))
-        self.screen.blit(self.wolf_2.image, (self.wolf_2.rect.x, self.wolf_2.rect.y))
-        self.screen.blit(self.wolf_3.image, (self.wolf_3.rect.x, self.wolf_3.rect.y))
+            self.screen.blit(self.wolf.image, (self.wolf.rect.x, self.wolf.rect.y))
+            self.screen.blit(self.wolf_2.image, (self.wolf_2.rect.x, self.wolf_2.rect.y))
+            self.screen.blit(self.wolf_3.image, (self.wolf_3.rect.x, self.wolf_3.rect.y))
         if event != '':
             self.events(event)
         self.players.draw(self.screen)
