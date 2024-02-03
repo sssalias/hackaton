@@ -25,7 +25,7 @@ def load_image(name, colorkey=None):
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos_x, pos_y):
         super().__init__(players)
-        self.image = load_image('0c4a35590e197fd.png')
+        self.image = load_image('Yellow dog\yellow_dog1.png')
         self.rect = self.image.get_rect().move(pos_x, pos_y)
         self.x = pos_x
         self.y = pos_y
@@ -56,6 +56,20 @@ class Grass(pygame.sprite.Sprite):
         self.x, self.y = x, y
 
 
+class Fon:
+    def __init__(self, x, y, img):
+        self.x = x
+        self.y = y
+        self.img_name = img
+        self.image = load_image(self.img_name)
+        self.rect = self.image.get_rect().move(x, y)
+
+    def move(self, x, y):
+        self.x += x
+        self.y += y
+        self.rect = self.image.get_rect().move(self.x, self.y)
+
+
 if __name__ == '__main__':
     pygame.init()
     pygame.display.set_caption('game')
@@ -73,9 +87,11 @@ if __name__ == '__main__':
 
     all_sprites = pygame.sprite.Group()
 
-    for i in range(100):
+    fon = Fon(-5000, -4400, 'fon.png')
+
+    '''for i in range(100):
         for j in range(50):
-            Grass(j * 50, i * 100 - 2500, 100, '0c4a35590e197fd.png', all_sprites=all_sprites)
+            Grass(j * 50, i * 100 - 2500, 100, '0c4a35590e197fd.png', all_sprites=all_sprites)'''
 
     player = Player(width // 2, height // 2)
 
@@ -90,6 +106,8 @@ if __name__ == '__main__':
 
     while running:
         screen.fill(pygame.Color('black'))
+        screen.blit(fon.image, (fon.x, fon.y))
+        print(fon.x, fon.image.get_rect().size[0], fon.y, fon.image.get_rect().size[1])
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -128,6 +146,8 @@ if __name__ == '__main__':
 
         for spr in all_sprites:
             spr.move(x, y)
+        fon.x += x
+        fon.y += y
 
         x = 0
         y = 0
