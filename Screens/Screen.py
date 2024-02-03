@@ -13,6 +13,7 @@ class Screen:
     def __init__(self, color) -> None:
         pygame.init()
         self.clock = pygame.time.Clock()
+        self.fps = 60
         nf = pygame.NOFRAME
         self.running = True
         pygame.display.set_caption('game')
