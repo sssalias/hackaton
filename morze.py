@@ -17,7 +17,7 @@ for i, j in eng_to_morz.items():
 for i, j in num_to_morz.items():
     morz_to_num[j] = i
 
-qqqqqqqqqqqqqqqqqqqq
+
 class Morz:
     def __init__(self, text=None, morz=None):
         if text is not None:
