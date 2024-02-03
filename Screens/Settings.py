@@ -1,6 +1,6 @@
 import pygame
 
-from Functions import collision_cursor, collision_cursor_polz
+from Utilities.Functions import collision_cursor, collision_cursor_polz
 from Utilities.Texts import Text
 
 
