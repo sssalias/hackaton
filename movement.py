@@ -69,8 +69,8 @@ class Tree(pygame.sprite.Sprite):
         self.x += x
         self.y += y
         self.rect = self.image.get_rect().move(self.x, self.y)
-        if not f:
-            self.kill()
+        #if not f:
+            #self.kill()
 
 
 
@@ -141,18 +141,16 @@ if __name__ == '__main__':
     y = 0
 
     imgs = [load_image('kyst.png'), load_image('pen.png'), load_image('treeBig.png'), load_image('treeMed.png'), load_image('treeSm.png'), load_image('treeVSm.png')]
+    for i in range(1000):
+        x2 = random.randint(-10000, 0)
+        y2 = random.randint(-5000, 0)
+        trees.add(Tree(x2, y2, random.choice(imgs)))
 
-    x2 = random.randint(-10000, 0)
-    y2 = random.randint(-5000, 0)
     f = (x2 > (player.x - width // 2) and x2 < (player.x + width // 2)) and (y2 < (player.y + height // 2) and y2 > (player.y - height // 2))
 
     while running:
 
-        for i in range(100):
-            x2 = random.randint(-10000, 0)
-            y2 = random.randint(-5000, 0)
-            if f:
-                trees.add(Tree(x2, y2, random.choice(imgs)))
+
 
 
 
