@@ -9,7 +9,7 @@ class Menu:
         self.screen = screen
         self.width = width
         self.height = height
-        self.text = Text(60, 'НАЗВАНИЕ', pygame.Color('Blue'), self.height // 2, self.width / 3 - 150, self.width,
+        self.text = Text(60, 'Animal Rescue', pygame.Color('Blue'), self.height // 2, self.width / 3 - 150, self.width,
                          self.height, self.screen)
         self.btn_1 = Text(60, 'SETTINGS', pygame.Color('Blue'), self.height // 2 + 150, self.width / 2.2, self.width,
                         self.height, self.screen, button=True)

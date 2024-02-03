@@ -21,15 +21,14 @@ class Wolf(pygame.sprite.Sprite):
         v_y = 0
         if (razn_y + razn_x) ** 0.5 > 1000:
             if self.p_x > self.rect.x:
-                v_x = 2
+                v_x = 1
             elif self.p_x < self.rect.x:
-                v_x = -2
+                v_x = -1
             if self.p_y > self.rect.y:
-                v_y = 2
+                v_y = 1
             elif self.p_y < self.rect.y:
-                v_y = -2
+                v_y = -1
         else:
-            print(self.p_x > self.rect.x, self.p_x, self.rect.x)
             if self.p_x > self.rect.x:
                 v_x = 4
             elif self.p_x < self.rect.x:
