@@ -30,6 +30,8 @@ class Level:
         self.objs = []
         self.fon = Fon(-5000, -4200, 'fon.png')
         self.night = False
+        self.widthScr = 1000
+        self.heightScr = 800
 
     def add(self, screens):
         self.screens = screens
@@ -38,13 +40,19 @@ class Level:
         self.screen.fill(pygame.Color('Blue'))
         self.wolfs.update(self.player, self.wolfs)
         self.player.selectAnim(self.r, self.l, self.u, self.d)
-        if self.moove():
+        a = self.moove()
+        if a and self.player.x == self.widthScr / 2 and self.player.y == self.heightScr / 2:
             for obj in self.objs:
                 obj.x += self.move_x
                 obj.y += self.move_y
                 obj.draw()
             self.fon.x += self.move_x
             self.fon.y += self.move_y
+        elif not a and 0 < self.player.y < self.player.y + self.player.height + self.move_y < 800:
+            self.player.y -= self.move_y
+            if 0 < self.player.x < self.player.x + self.player.width + self.move_x < 1000:
+                self.player.x -= self.move_x
+        print(a, self.player.y, self.player.y + self.player.height + self.move_y, self.player.x, self.player.x + self.player.width + self.move_x)
         self.screen.blit(self.fon.image, (self.fon.x, self.fon.y))
         if self.night:
             self.wolf.rect.x += self.move_x

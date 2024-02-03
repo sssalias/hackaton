@@ -44,6 +44,7 @@ class Player(pygame.sprite.Sprite):
         else:
             self.image = self.p
         self.number += 1 / 10
+        self.rect = self.image.get_rect().move(self.x, self.y)
 
     def animation(self, anim):
         self.image = anim[round(self.number) % len(anim)]
