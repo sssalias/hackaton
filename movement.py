@@ -25,11 +25,10 @@ def load_image(name, colorkey=None):
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos_x, pos_y):
         super().__init__(players, all_sprites)
-        self.image = load_image('Enemy_2_1.png')
+        self.image = load_image('0c4a35590e197fd.png')
         self.rect = self.image.get_rect().move(pos_x, pos_y)
         self.x = pos_x
         self.y = pos_y
-
 
 class Circle:
     def __init__(self, x, y, screen):
@@ -76,7 +75,6 @@ if __name__ == '__main__':
                 running = False
 
             if event.type == pygame.KEYDOWN:
-                print('2')
                 if event.key == pygame.K_UP:
                     u = True
                 elif event.key == pygame.K_DOWN:
@@ -87,7 +85,6 @@ if __name__ == '__main__':
                     l = True
 
             elif event.type == pygame.KEYUP:
-                print('smth')
                 if event.key == pygame.K_UP:
                     u = False
                 elif event.key == pygame.K_DOWN:
