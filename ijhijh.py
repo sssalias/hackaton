@@ -1,5 +1,6 @@
 import pygame
 import pygame.sprite
+import random
 
 import os
 import sys
@@ -25,46 +26,10 @@ def load_image(name, colorkey=None):
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos_x, pos_y):
         super().__init__(players)
-        self.image = load_image('people\\part1_1.png')
+        self.image = load_image('Yellow dog\\1.png')
         self.rect = self.image.get_rect().move(pos_x, pos_y)
         self.x = pos_x
         self.y = pos_y
-        self.height = 150
-        self.width = self.image.get_rect().size[0] / (self.image.get_rect().size[1] / self.height)
-        self.image = pygame.transform.scale(self.image, (self.width, self.height))
-
-        self.animR = [load_image('people\\part1_10.png'), load_image('people\\part1_11.png'),
-                      load_image('people\\part1_12.png'), load_image('people\\part1_11.png'), load_image('people\\part1_10.png')]
-
-        self.animL = [load_image('people\\part1_4.png'), load_image('people\\part1_5.png'),
-                      load_image('people\\part1_6.png'), load_image('people\\part1_5.png'), load_image('people\\part1_4.png')]
-
-        self.animD = [load_image('people\\part1_1.png'), load_image('people\\part1_2.png'),
-                      load_image('people\\part1_3.png'), load_image('people\\part1_2.png'), load_image('people\\part1_1.png')]
-
-        self.animU = [load_image('people\\part1_7.png'), load_image('people\\part1_8.png'),
-                      load_image('people\\part1_9.png'), load_image('people\\part1_8.png'), load_image('people\\part1_7.png')]
-
-        self.p = self.image
-        self.number = 1 / 10
-
-    def selectAnim(self, r, l, u, d):
-        if r:
-            self.animation(self.animR)
-        elif l:
-            self.animation(self.animL)
-        elif d:
-            self.animation(self.animD)
-        elif u:
-            self.animation(self.animU)
-        else:
-            self.image = self.p
-        self.number += 1 / 10
-
-    def animation(self, anim):
-        self.image = anim[round(self.number) % len(anim)]
-        self.image = pygame.transform.scale(self.image, (self.width, self.height))
-
 
 
 class Circle:
@@ -116,7 +81,7 @@ class Wolf(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
 
-    def update(self, other):
+    def update(self, other, wolfs):
 
         razn_x = (self.p_x - self.rect.x) ** 2
         razn_y = (self.p_y - self.rect.y) ** 2
@@ -124,26 +89,29 @@ class Wolf(pygame.sprite.Sprite):
         v_y = 0
         if (razn_y + razn_x) ** 0.5 > 1000:
             if self.p_x > self.rect.x:
-                v_x = 1
+                v_x = 2
             elif self.p_x < self.rect.x:
-                v_x = -1
+                v_x = -2
             if self.p_y > self.rect.y:
-                v_y = 1
+                v_y = 2
             elif self.p_y < self.rect.y:
-                v_y = -1
+                v_y = -2
         else:
             print(self.p_x > self.rect.x, self.p_x, self.rect.x)
             if self.p_x > self.rect.x:
-                v_x = 3
+                v_x = 4
             elif self.p_x < self.rect.x:
-                v_x = -3
+                v_x = -4
             if self.p_y > self.rect.y:
-                v_y = 3
+                v_y = 4
             elif self.p_y < self.rect.y:
-                v_y = -3
+                v_y = -4
         self.rect.y += v_y
         self.rect.x += v_x
-        self.image = load_image('Yellow dog\\1.png')
+        self.image = load_image('Yellow dog\\2.png')
+        for i in wolfs:
+            if pygame.sprite.collide_mask(self, i) and self != i:
+                self.rect = self.rect.move(random.randint(-10, 10), random.randint(-10, 10))
 
 
 if __name__ == '__main__':
@@ -179,11 +147,15 @@ if __name__ == '__main__':
     u, d, r, l = False, False, False, False
     x = 0
     y = 0
-
-    wolf = Wolf(-2000, -3000)
-
+    wolfs = pygame.sprite.Group()
+    wolf = Wolf(-100, -100)
+    wolf_2 = Wolf(500, -100)
+    wolf_3 = Wolf(-100, 500)
+    wolfs.add(wolf)
+    wolfs.add(wolf_2)
+    wolfs.add(wolf_3)
     while running:
-        wolf.update(player)
+        wolfs.update(player, wolfs)
         screen.fill(pygame.Color('black'))
         screen.blit(fon.image, (fon.x, fon.y))
         for event in pygame.event.get():
@@ -228,8 +200,14 @@ if __name__ == '__main__':
         fon.y += y
         wolf.rect.x += x
         wolf.rect.y += y
+        wolf_2.rect.x += x
+        wolf_2.rect.y += y
+        wolf_3.rect.x += x
+        wolf_3.rect.y += y
         print(wolf.rect.x, wolf.rect.y)
         screen.blit(wolf.image, (wolf.rect.x, wolf.rect.y))
+        screen.blit(wolf_2.image, (wolf_2.rect.x, wolf_2.rect.y))
+        screen.blit(wolf_3.image, (wolf_3.rect.x, wolf_3.rect.y))
 
         x = 0
         y = 0
@@ -238,8 +216,6 @@ if __name__ == '__main__':
         players.draw(screen)
 
         clock.tick(fps)
-
-        player.selectAnim(r, l, u, d)
 
         pygame.display.flip()
 

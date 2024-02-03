@@ -2,6 +2,7 @@ import pygame
 from Utilities.Texts import Text
 from Utilities.Player import Player
 from Utilities.Fon import Fon
+from Utilities.Wolf import Wolf
 
 
 class Level:
@@ -16,6 +17,13 @@ class Level:
         self.players = pygame.sprite.Group()
         all_sprites = pygame.sprite.Group()
         self.player = Player(width / 2, height / 2, 'new_yellow_dog\yellow_dog_11.png', players=self.players)
+        self.wolfs = pygame.sprite.Group()
+        self.wolf = Wolf(-100, -100, width, height)
+        self.wolf_2 = Wolf(500, -100, width, height)
+        self.wolf_3 = Wolf(-100, 500, width, height)
+        self.wolfs.add(self.wolf)
+        self.wolfs.add(self.wolf_2)
+        self.wolfs.add(self.wolf_3)
         self.u, self.d, self.r, self.l = False, False, False, False
         self.move_x = 0
         self.move_y = 0
@@ -27,7 +35,9 @@ class Level:
 
     def loop(self, event=''):
         self.screen.fill(pygame.Color('Blue'))
+        self.wolfs.update(self.player, self.wolfs)
         print(self.move_y, self.move_x)
+        self.player.selectAnim(self.r, self.l, self.u, self.d)
         for obj in self.objs:
             obj.x += self.move_x
             obj.y += self.move_y
@@ -35,6 +45,15 @@ class Level:
         self.fon.x += self.move_x
         self.fon.y += self.move_y
         self.screen.blit(self.fon.image, (self.fon.x, self.fon.y))
+        self.wolf.rect.x += self.move_x
+        self.wolf.rect.y += self.move_y
+        self.wolf_2.rect.x += self.move_x
+        self.wolf_2.rect.y += self.move_y
+        self.wolf_3.rect.x += self.move_x
+        self.wolf_3.rect.y += self.move_y
+        self.screen.blit(self.wolf.image, (self.wolf.rect.x, self.wolf.rect.y))
+        self.screen.blit(self.wolf_2.image, (self.wolf_2.rect.x, self.wolf_2.rect.y))
+        self.screen.blit(self.wolf_3.image, (self.wolf_3.rect.x, self.wolf_3.rect.y))
         if event != '':
             self.events(event)
         self.players.draw(self.screen)
