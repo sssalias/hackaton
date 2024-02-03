@@ -90,40 +90,45 @@ class Wolf(pygame.sprite.Sprite):
         v_x = 0
         v_y = 0
         if (razn_y + razn_x) ** 0.5 > 1000:
-            if self.p_x > self.rect.x:
+            if self.p_x > self.rect.x + 3:
                 v_x = 2
-            elif self.p_x < self.rect.x:
+            elif self.p_x - 3 < self.rect.x:
                 v_x = -2
-            if self.p_y > self.rect.y:
+            if self.p_y - 3 > self.rect.y:
                 v_y = 2
-            elif self.p_y < self.rect.y:
+            elif self.p_y + 3 < self.rect.y:
                 v_y = -2
         else:
-            print(self.p_x > self.rect.x, self.p_x, self.rect.x)
-            if self.p_x > self.rect.x:
+            print(self.p_x, self.rect.x)
+            if self.p_x - 3> self.rect.x:
                 v_x = 4
-            elif self.p_x < self.rect.x:
+            elif self.p_x + 3 < self.rect.x:
                 v_x = -4
-            if self.p_y > self.rect.y:
+            if self.p_y - 3 > self.rect.y:
                 v_y = 4
-            elif self.p_y < self.rect.y:
+            elif self.p_y + 3 < self.rect.y:
                 v_y = -4
         self.rect.y += v_y
         self.rect.x += v_x
         # self.ind+=0.025
+        print(v_x, v_y)
         if v_x<0:
-            self.image=load_image(f"wolf\\{(self.indx+5)%10}.png")
-            self.indx+=0.025
+            self.image=load_image(f"wolf\\w{int(self.indx)%5+5}.png")
+
+            self.indx+=0.025 * 4
         elif v_x>0:
-            self.image=load_image(f"wolf\\{(self.indx+5)%5}.png")
-            self.indx+=0.025
+            self.image=load_image(f"wolf\\w{int(self.indx)%5+5}.png")
+            self.image = pygame.transform.flip(self.image, True, False)
+            self.indx+=0.025 * 4
             # pygame.image.flip(screen, True, False)
-        elif v_y>0:
-            self.image=load_image(f"wolf\\{self.indy%5+5}.png")
-            self.indy+=0.25
+        elif v_y<0:
+
+            self.image=load_image(f"wolf\\w{int(self.indy)%4+10}.png")
+            self.indy+=0.025 * 4
         else:
-            self.image=load_image(f"wolf\\{self.indy%10}.png")
-            self.indy += 0.25
+            # print(int(self.indy) % 4 + 10)
+            self.image=load_image(f"wolf\\w{int(self.indy)%5}.png")
+            self.indy += 0.025 * 4
         for i in wolfs:
             if pygame.sprite.collide_mask(self, i) and self != i:
                 self.rect = self.rect.move(random.randint(-10, 10), random.randint(-10, 10))
@@ -219,7 +224,6 @@ if __name__ == '__main__':
         wolf_2.rect.y += y
         wolf_3.rect.x += x
         wolf_3.rect.y += y
-        print(wolf.rect.x, wolf.rect.y)
         screen.blit(wolf.image, (wolf.rect.x, wolf.rect.y))
         screen.blit(wolf_2.image, (wolf_2.rect.x, wolf_2.rect.y))
         screen.blit(wolf_3.image, (wolf_3.rect.x, wolf_3.rect.y))
