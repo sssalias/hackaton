@@ -29,7 +29,6 @@ class Game(Screen):
                 ev = event
             for scr in self.screens:
                 if scr.state:
-                    print('smth')
                     if ev != '':
                         scr.loop(event=ev)
                     else:
