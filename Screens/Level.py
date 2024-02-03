@@ -1,6 +1,7 @@
 import pygame
 from Utilities.Texts import Text
 from Utilities.Player import Player
+from Utilities.Functions import load_image
 
 
 class Level:
@@ -14,11 +15,12 @@ class Level:
         self.draw = False
         players = pygame.sprite.Group()
         all_sprites = pygame.sprite.Group()
-        self.player = Player(0, 0, '0c4a35590e197fd', players=players, all_sprites=all_sprites)
+        self.player = Player(0, 0, 'new_yellow_dog\yellow_dog_11.png', players=players, all_sprites=all_sprites)
         self.u, self.d, self.r, self.l = False, False, False, False
         self.move_x = 0
         self.move_y = 0
         self.objs = []
+        self.fon = Fon(-5000, -4400, 'fon.png')
 
     def add(self, screens):
         self.screens = screens
@@ -36,7 +38,7 @@ class Level:
             obj.x += self.move_x
             obj.y += self.move_y
             obj.draw()
-        self.screen.fill(pygame.Color('Red'))
+        self.screen.blit(self.fon.image, (self.fon.x, self.fon.y))
         self.events(event)
         if self.draw:
             self.leave.draw_text()
@@ -70,4 +72,18 @@ class Level:
                 self.r = False
             elif event.key == pygame.K_LEFT:
                 self.l = False
+
+
+class Fon:
+    def __init__(self, x, y, img):
+        self.x = x
+        self.y = y
+        self.img_name = img
+        self.image = load_image(self.img_name)
+        self.rect = self.image.get_rect().move(x, y)
+
+    def move(self, x, y):
+        self.x += x
+        self.y += y
+        self.rect = self.image.get_rect().move(self.x, self.y)
 

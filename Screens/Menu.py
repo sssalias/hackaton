@@ -1,6 +1,6 @@
 import pygame
 from Utilities.Texts import Text
-from Functions import collision_cursor
+from Utilities.Functions import collision_cursor
 
 
 class Menu:
