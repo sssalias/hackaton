@@ -4,6 +4,8 @@ import pygame.sprite
 import os
 import sys
 
+import random
+
 
 def load_image(name, colorkey=None):
     fullname = os.path.join('data', name)
@@ -25,20 +27,13 @@ def load_image(name, colorkey=None):
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos_x, pos_y):
         super().__init__(players)
-        self.image = load_image('people\yellow_part1_1.png')
+        self.image = load_image('people\\part1_1.png')
         self.rect = self.image.get_rect().move(pos_x, pos_y)
         self.x = pos_x
         self.y = pos_y
-        self.lifes = 3
-        self.anim = []
-
-    def damage(self):
-        self.lifes -= 1
-        if self.lifes == 0:
-            death = True  # если жизни равны 0, то death становится True
-
-    def animation(self):
-        pass
+        self.height = 150
+        self.width = self.image.get_rect().size[0] / (self.image.get_rect().size[1] / self.height)
+        self.image = pygame.transform.scale(self.image, (self.width, self.height))
 
 
 class Circle:
@@ -49,6 +44,34 @@ class Circle:
 
     def draw(self):
         pygame.draw.circle(self.screen, pygame.Color('white'), (self.x, self.y), 10)
+
+
+class Tree(pygame.sprite.Sprite):
+    def __init__(self, pos_x, pos_y, image):
+        super().__init__(trees, all_sprites)
+        self.image = image
+        self.rect = self.image.get_rect().move(pos_x, pos_y)
+        self.x = pos_x
+        self.y = pos_y
+        self.height = 150
+        self.width = self.image.get_rect().size[0] / (self.image.get_rect().size[1] / self.height)
+        self.image = pygame.transform.scale(self.image, (self.width, self.height))
+        self.d = image
+
+
+    def update(self, v=None):
+        if v == 'night':
+            self.image = 0
+        else:
+            self.image = self.d
+
+    def move(self, x, y):
+        self.x += x
+        self.y += y
+        self.rect = self.image.get_rect().move(self.x, self.y)
+        if not f:
+            self.kill()
+
 
 
 class Grass(pygame.sprite.Sprite):
@@ -88,6 +111,8 @@ if __name__ == '__main__':
     size = width, height = 800, 600
     screen = pygame.display.set_mode(size)
 
+    trees = pygame.sprite.Group()
+
     circ = Circle(width // 2 + 250, height // 2, screen)
     circ_2 = Circle(width, height // 2, screen)
     circ_3 = Circle(width, height, screen)
@@ -115,10 +140,29 @@ if __name__ == '__main__':
     x = 0
     y = 0
 
+    imgs = [load_image('kyst.png'), load_image('pen.png'), load_image('treeBig.png'), load_image('treeMed.png'), load_image('treeSm.png'), load_image('treeVSm.png')]
+
+    x2 = random.randint(-10000, 0)
+    y2 = random.randint(-5000, 0)
+    f = (x2 > (player.x - width // 2) and x2 < (player.x + width // 2)) and (y2 < (player.y + height // 2) and y2 > (player.y - height // 2))
+
     while running:
+
+        for i in range(100):
+            x2 = random.randint(-10000, 0)
+            y2 = random.randint(-5000, 0)
+            if f:
+                trees.add(Tree(x2, y2, random.choice(imgs)))
+
+
+
+
+        for el in trees:
+            el.move(x, y)
+
         screen.fill(pygame.Color('black'))
         screen.blit(fon.image, (fon.x, fon.y))
-        print(fon.x, fon.image.get_rect().size[0], fon.y, fon.image.get_rect().size[1])
+        #print(fon.x, fon.image.get_rect().size[0], fon.y, fon.image.get_rect().size[1])
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -166,7 +210,12 @@ if __name__ == '__main__':
 
         players.draw(screen)
 
+        trees.draw(screen)
+
         clock.tick(fps)
+
+        for el in trees:
+            print(el)
 
         pygame.display.flip()
 
