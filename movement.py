@@ -25,16 +25,20 @@ def load_image(name, colorkey=None):
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos_x, pos_y):
         super().__init__(players)
-        self.image = load_image('Yellow dog\yellow_dog1.png')
+        self.image = load_image('people\yellow_part1_1.png')
         self.rect = self.image.get_rect().move(pos_x, pos_y)
         self.x = pos_x
         self.y = pos_y
         self.lifes = 3
+        self.anim = []
 
     def damage(self):
         self.lifes -= 1
         if self.lifes == 0:
             death = True  # если жизни равны 0, то death становится True
+
+    def animation(self):
+        pass
 
 
 class Circle:

@@ -34,5 +34,6 @@ class Game(Screen):
                         scr.loop(event=ev)
                     else:
                         scr.loop()
+            self.clock.tick(self.fps)
             pygame.display.flip()
         pygame.quit()
